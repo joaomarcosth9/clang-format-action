@@ -20,14 +20,18 @@ echo "## Configuring git author..."
 git config --global user.email "clang-format@1337z.ninja"
 git config --global user.name "Clang Format"
 
+echo "## Config file"
+cat .clang-format
+echo ""
+
 # Ignore workflow files (we may not touch them)
 git update-index --assume-unchanged .github/workflows/*
 
 echo "## Running clang-format on C/C++ source"
-(git ls-tree --full-tree -r HEAD | grep -e "\.\(c\|cpp\)\$" | cut -f 2) | while read -r FILE; do clang-format -i -style=file "$FILE"; done
+(git ls-tree --full-tree -r HEAD | grep -e "\.\(c\|cpp\)\$" | cut -f 2) | while read -r FILE; do clang-format -style=file -i "$FILE"; done
 
 echo "## Commiting files..."
-git commit -a -m "apply clang-format" || true
+git commit -a -m "formatted with clang-format" || true
 
 echo "## Pushing to $BRANCH"
 git push -u origin $BRANCH
