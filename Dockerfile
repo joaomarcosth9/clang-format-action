@@ -11,6 +11,8 @@ RUN wget "https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.6/
     cd clang* && \
     cp -R * /usr/local
 
+RUN git config --global --add safe.directory /github/workspace
+
 COPY LICENSE README.md /
 
 COPY .clang-format /.clang-format
